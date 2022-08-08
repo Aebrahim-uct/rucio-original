@@ -147,7 +147,9 @@ if __name__ == '__main__':
 
     if os.getenv('POLICY') == 'belleii':
         belleii_bootstrap(client)
-
-    response = create_influxdb_database()
-    if response.status_code != 201:
-        print('Failed to create rucio database in influxDB : %s' % response.text)
+    try:
+        response = create_influxdb_database()
+        if response.status_code != 201:
+            print('Failed to create rucio database in influxDB : %s' % response.text)
+    except:
+        print('Problem within try-except block')
