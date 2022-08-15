@@ -65,3 +65,7 @@ tools/test.file.1G
 
 # autotest logs/data
 /.autotest
+
+# test files
+lib/rucio/tests/*
+
