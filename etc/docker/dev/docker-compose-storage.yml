@@ -119,11 +119,11 @@ services:
     volumes:
       - ../../certs/ssh/ruciouser_sshkey.pub:/tmp/sshkey.pub:Z
   ui:
-    image: docker.io/rucio/rucio-dev
+    image: docker.io/rucio/rucio-ui
     network_mode: "service:rucio"
     environment:
-      - RUCIO_PROXY="https://localhost:8443" 
-      - RUCIO_AUTH_PROXY="https://localhost:8443" 
+      - RUCIO_PROXY="http://localhost:8443" 
+      - RUCIO_AUTH_PROXY="http://localhost:8443" 
     volumes:
       - /home/ubuntu/ragat-repo/RAGAT/rucio/repo/rucio-original/etc/certs/rucio_ca.pem:/etc/grid-security/ca.pem 
       - /home/ubuntu/ragat-repo/RAGAT/rucio/repo/rucio-original/etc/certs/hostcert_rucio.pem:/etc/grid-security/hostcert.pem 
