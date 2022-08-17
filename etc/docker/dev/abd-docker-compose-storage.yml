@@ -13,6 +13,7 @@ services:
       - "minio:127.0.0.1"
       - "activemq:127.0.0.1"
       - "ssh1:127.0.0.1"
+      - "ui:192.0.0.10"
     ports:
       - "127.0.0.1:8443:443"
       - "127.0.0.1:5432:5432"
@@ -27,6 +28,8 @@ services:
       - "127.0.0.1:9000:9000"
       - "127.0.0.1:61613:61613"
       - "127.0.0.1:2222:22"
+      - "16000:192.0.0.10:443"
+
     volumes:
       - ../../../tools:/opt/rucio/tools:Z
       - ../../../bin:/opt/rucio/bin:Z
@@ -116,3 +119,16 @@ services:
     network_mode: "service:rucio"
     volumes:
       - ../../certs/ssh/ruciouser_sshkey.pub:/tmp/sshkey.pub:Z
+  ui:
+    image: docker.io/rucio/rucio-dev
+    network_mode: "service:rucio"
+    environment:
+      - RUCIO_PROXY="https://localhost:8443" 
+      - RUCIO_AUTH_PROXY="https://localhost:8443" 
+    volumes:
+      - /home/ubuntu/ragat-repo/RAGAT/rucio/repo/rucio-original/etc/certs/rucio_ca.pem:/etc/grid-security/ca.pem 
+      - /home/ubuntu/ragat-repo/RAGAT/rucio/repo/rucio-original/etc/certs/hostcert_rucio.pem:/etc/grid-security/hostcert.pem 
+      - /home/ubuntu/ragat-repo/RAGAT/rucio/repo/rucio-original/etc/certs/hostcert_rucio.key.pem:/etc/grid-security/hostkey.pem 
+      - /home/ubuntu/ragat-repo/RAGAT/rucio/repo/rucio-original/etc/certs/hostcert_rucio.key.pem 
+      - /home/ubuntu/ragat-repo/RAGAT/rucio/rucio-ui.cfg:/opt/rucio/etc/rucio.cfg 
+
